@@ -3,6 +3,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "boost/filesystem.hpp"
+
 int main(int argc, char * argv[]) {
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " /path/to/temp/dir" << std::endl;
@@ -27,9 +29,11 @@ int main(int argc, char * argv[]) {
     ss << temp_filename << ".moved";
     std::string renamed_temp_filename = ss.str();
 
-    auto rename_res = ::rename(temp_filename, renamed_temp_filename.c_str());
-    if (rename_res == -1) {
+    boost::system::error_code ec;
+    boost::filesystem::rename(temp_filename, renamed_temp_filename.c_str(), ec);
+    if (!ec) {
         std::cerr << "Error renaming file from: " << temp_filename << " to: " << renamed_temp_filename << std::endl;
+        std::cerr << "Error message: " << ec.message() << std::endl;
         return -1;
     }
 
