@@ -1,4 +1,5 @@
 #include <cstring>
+#include <fstream>
 #include <iostream>
 #include <sstream>
 
@@ -19,6 +20,9 @@ int main(int argc, char * argv[]) {
     }
 
     std::cout << "Generated temporary file: " << temp_filename << std::endl;
+
+    std::ifstream input_file(temp_filename);
+
     std::stringstream ss;
     ss << temp_filename << ".moved";
     std::string renamed_temp_filename = ss.str();
