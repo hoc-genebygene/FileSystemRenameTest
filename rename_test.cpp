@@ -23,8 +23,6 @@ int main(int argc, char * argv[]) {
 
     std::cout << "Generated temporary file: " << temp_filename << std::endl;
 
-    std::ifstream input_file(temp_filename);
-
     std::stringstream ss;
     ss << temp_filename << ".moved";
     std::string renamed_temp_filename = ss.str();
@@ -38,6 +36,14 @@ int main(int argc, char * argv[]) {
     }
 
     std::cout << "Successfully renamed file from: " << temp_filename << " to " << renamed_temp_filename << std::endl;
+
+    std::ifstream input_file(renamed_temp_filename);
+    if (input_file.fail()) {
+        std::cerr << "Error opening renamed file: " << renamed_temp_filename << std::endl;
+        return -1;
+    }
+
+    std::cout << "Succesfully opened renamed file: " << renamed_temp_filename << std::endl;
 
     free(temp_filename);
     return 0;
