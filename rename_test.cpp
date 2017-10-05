@@ -31,7 +31,7 @@ int main(int argc, char * argv[]) {
 
     boost::system::error_code ec;
     boost::filesystem::rename(temp_filename, renamed_temp_filename.c_str(), ec);
-    if (!ec) {
+    if (ec) {
         std::cerr << "Error renaming file from: " << temp_filename << " to: " << renamed_temp_filename << std::endl;
         std::cerr << "Error message: " << ec.message() << std::endl;
         return -1;
